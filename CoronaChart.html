@@ -1,0 +1,181 @@
+<html>
+  <head>
+    <style type="text/css">
+      #div_table_total
+      {
+        border: none;
+        display: table;
+        font-weight: bold;
+        width: 100%;
+      }
+      .div_table_total_row
+      {
+        width: 100%;
+        display: table-row;
+        font-size: 45px;
+      }
+      .div_table_total_cell
+      {
+        display: table-cell;
+        text-align: center;
+        width: 33%;
+      }
+      .div_table_list
+      {
+        display: table;
+        border: none;
+        width: 95%;
+        margin-left: 20px;
+      }
+      .div_table_list_header_row
+      {
+        width: 100%;
+        display: table-row;
+        font-weight: bold;
+        color: #EEEEEE;
+      }
+      .div_table_list_cell
+      {
+        display: table-cell;
+        color: #EEEEEE;
+        font-size: 40px;
+        text-align: left;
+      }
+      .div_table_list_num_cell
+      {
+        display: table-cell;
+        color: #EEEEEE;
+        font-size: 40px;
+        text-align: right;
+      }
+      .div_table_list_confirmed_cell
+      {
+        display: table-cell;
+        color: #8888FF;
+        font-size: 40px;
+        text-align: right;
+      }
+      .div_table_list_death_cell
+      {
+        display: table-cell;
+        color: #AA5555;
+        font-size: 40px;
+        text-align: right;
+      }
+      .div_table_list_recovered_cell
+      {
+        display: table-cell;
+        color: #22AA22;
+        font-size: 40px;
+        text-align: right;
+      }
+    </style>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+
+      google.charts.load('current', {'packages':['geochart']});
+      google.charts.setOnLoadCallback(drawRegionsMap);
+
+      function handleQueryResponse(response) 
+      {
+        if (response.isError()) 
+        {
+          alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+          return;
+        }
+        var coronaData = response.getDataTable();
+        var coronaTable = new google.visualization.DataTable();
+
+        coronaTable.addColumn({type:'string', id:'Country'});
+        coronaTable.addColumn({type:'number', id:'Confirmed'});
+        coronaTable.addColumn({type:'number', id:'Deaths'});
+        //alert(JSON.stringify(coronaData[x], null, 4));
+        
+        var numRows = coronaData.getNumberOfRows();
+        var numCols = coronaData.getNumberOfColumns();
+        var totalConfirmed = 0;
+        var totalDeath = 0;
+        var totalRecovered = 0;
+
+        document.getElementById('div_country_list').innerHTML += '<div class=div_table_list_header_row>';
+        document.getElementById('div_country_list').innerHTML += '<div class=div_table_list_cell>' + '國家' +'</div>';
+        document.getElementById('div_country_list').innerHTML += '<div class=div_table_list_confirmed_cell>' + '確診' +'</div>';
+        document.getElementById('div_country_list').innerHTML += '<div class=div_table_list_death_cell>' + '死亡' +'</div>';
+        document.getElementById('div_country_list').innerHTML += '<div class=div_table_list_recovered_cell>' + '康復' +'</div>';
+        document.getElementById('div_country_list').innerHTML += '</div>';
+
+        for(var idx = 0;idx < numRows;idx++)
+        {
+        	if('Mainland China'==coronaData.getValue(idx, 0))
+        	{
+        		coronaTable.addRow(['China', coronaData.getValue(idx, 1), coronaData.getValue(idx, 2)]);
+        	}
+        	else
+        	{
+        		coronaTable.addRow([coronaData.getValue(idx, 0), coronaData.getValue(idx, 1), coronaData.getValue(idx, 2)]);
+        	}
+          totalConfirmed += coronaData.getValue(idx, 1);
+          totalDeath += coronaData.getValue(idx, 2);
+          totalRecovered += coronaData.getValue(idx, 3);
+
+          document.getElementById('div_country_list').innerHTML += '<div class=div_table_list_header_row>';
+          document.getElementById('div_country_list').innerHTML += '<div class=div_table_list_cell>' + coronaData.getValue(idx, 0) +'</div>';
+          document.getElementById('div_country_list').innerHTML += '<div class=div_table_list_confirmed_cell>' + coronaData.getValue(idx, 1) +'</div>';
+          document.getElementById('div_country_list').innerHTML += '<div class=div_table_list_death_cell>' + coronaData.getValue(idx, 2) +'</div>';
+          document.getElementById('div_country_list').innerHTML += '<div class=div_table_list_recovered_cell>' + coronaData.getValue(idx, 3) +'</div>';
+          document.getElementById('div_country_list').innerHTML += '</div>';
+        }
+        document.getElementById('div_sum_confirmed').innerText = totalConfirmed;
+        document.getElementById('div_sum_death').innerText = totalDeath;
+        document.getElementById('div_sum_recovered').innerText = totalRecovered;
+        
+        var container = document.getElementById('regions_div');
+        var chart = new google.visualization.GeoChart(container);
+
+        var options = {
+          displayMode: 'regions',
+          backgroundColor: '#303030',
+          datalessRegionColor: 'grey',
+          colorAxis: {colors: ['orange', 'red']}
+        };
+
+        chart.draw(coronaTable, options);
+      }
+      function localizationText() 
+      {
+        document.getElementById('div_text_confirmed').innerText = '確診';
+        document.getElementById('div_text_death').innerText = '死亡';
+        document.getElementById('div_text_recovered').innerText = '康復';
+      }
+      function drawRegionsMap() 
+      {
+        localizationText();
+
+        var container = document.getElementById('regions_div');
+        var chart = new google.visualization.GeoChart(container);
+
+        var spreadsheetURL = 'https://docs.google.com/spreadsheets/d/1wQVypefm946ch4XDp37uZ-wartW4V7ILdg-qYiDXUHM/edit?usp=sharing';
+        var queryString ='SELECT B, sum(D), sum(E), sum(F) group by B order by sum(D) desc';
+ 
+        var query = new google.visualization.Query(spreadsheetURL + "&headers=1&tq=" + queryString);
+        query.send(handleQueryResponse);
+      }
+    </script>
+  </head>
+  <body style='background-color: #303030'>
+    <div id="div_table_total">
+      <div class='div_table_total_row'>
+        <div class='div_table_total_cell' id='div_text_confirmed' style='color: #8888FF'></div>
+        <div class='div_table_total_cell' id='div_text_death' style='color: #AA5555'></div>
+        <div class='div_table_total_cell' id='div_text_recovered' style='color: #22AA22'></div>
+      </div>
+      <div class='div_table_total_row'>
+        <div class='div_table_total_cell' id='div_sum_confirmed' style='color: #8888FF; font-weight: bold; font-size: 90px'></div>
+        <div class='div_table_total_cell' id='div_sum_death' style='color: #AA5555; font-weight: bold; font-size: 90px'></div>
+        <div class='div_table_total_cell' id='div_sum_recovered' style='color: #22AA22; font-weight: bold; font-size: 90px'></div>
+      </div>
+    </div>
+    <div id="regions_div"></div>
+    <div id="div_country_list" class='div_table_list'></div>
+  </body>
+</html>
