@@ -40,13 +40,8 @@
         color: #EEEEEE;
         font-size: 40px;
         text-align: left;
-      }
-      .div_table_list_num_cell
-      {
-        display: table-cell;
-        color: #EEEEEE;
-        font-size: 40px;
-        text-align: right;
+        border-collapse: collapse;
+        border-bottom: 1px solid grey;
       }
       .div_table_list_confirmed_cell
       {
@@ -54,6 +49,7 @@
         color: #8888FF;
         font-size: 40px;
         text-align: right;
+        border-bottom: 1px solid grey;
       }
       .div_table_list_death_cell
       {
@@ -61,6 +57,7 @@
         color: #AA5555;
         font-size: 40px;
         text-align: right;
+        border-bottom: 1px solid grey;
       }
       .div_table_list_recovered_cell
       {
@@ -68,6 +65,7 @@
         color: #22AA22;
         font-size: 40px;
         text-align: right;
+        border-bottom: 1px solid grey;
       }
     </style>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -162,7 +160,7 @@
       }
     </script>
   </head>
-  <body style='background-color: #303030; font-family: Verdana'>
+  <body style='background-color: #303030;font-family: Verdana'>
     <div id="div_table_total">
       <div class='div_table_total_row'>
         <div class='div_table_total_cell' id='div_text_confirmed' style='color: #8888FF'></div>
