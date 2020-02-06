@@ -21,7 +21,6 @@
         coronaTable.addColumn({type:'string', id:'Country'});
         coronaTable.addColumn({type:'number', id:'Confirmed'});
         coronaTable.addColumn({type:'number', id:'Deaths'});
-        //alert(JSON.stringify(coronaData[x], null, 4));
 
         var numRows = coronaData.getNumberOfRows();
         var numCols = coronaData.getNumberOfColumns();
@@ -32,10 +31,10 @@
         var root = document.querySelector('div#div_country_list');
 
         root.querySelector('thead').appendChild(createRow([
-          {label: 'Country', className: 'div_table_list_cell'},
-          {label: 'Confirmed', className: 'div_table_list_confirmed_cell'},
-          {label: 'Deaths', className: 'div_table_list_death_cell'},
-          {label: 'Recovered', className: 'div_table_list_recovered_cell'},
+          {label: 'Country', className: 'div_table_list_header_cell'},
+          {label: 'Confirmed', className: 'div_table_list_confirmed_header_cell'},
+          {label: 'Deaths', className: 'div_table_list_death_header_cell'},
+          {label: 'Recovered', className: 'div_table_list_recovered_header_cell'},
         ]));
 
         var tbody = root.querySelector('tbody');
