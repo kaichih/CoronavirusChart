@@ -31,7 +31,15 @@
         font-size: 40px;
         text-align: left;
         border-collapse: collapse;
-        border-bottom: 1px solid grey;
+      }
+      .div_table_list_header_cell
+      {
+        display: table-cell;
+        color: #EEEEEE;
+        font-size: 40px;
+        text-align: left;
+        border-collapse: collapse;
+        background: #404040;
       }
       .div_table_list_confirmed_cell
       {
@@ -39,7 +47,14 @@
         color: #8888FF;
         font-size: 40px;
         text-align: right;
-        border-bottom: 1px solid grey;
+      }
+      .div_table_list_confirmed_header_cell
+      {
+        display: table-cell;
+        color: #8888FF;
+        font-size: 40px;
+        text-align: right;
+        background: #404040;
       }
       .div_table_list_death_cell
       {
@@ -47,7 +62,14 @@
         color: #AA5555;
         font-size: 40px;
         text-align: right;
-        border-bottom: 1px solid grey;
+      }
+      .div_table_list_death_header_cell
+      {
+        display: table-cell;
+        color: #AA5555;
+        font-size: 40px;
+        text-align: right;
+        background: #404040;
       }
       .div_table_list_recovered_cell
       {
@@ -55,7 +77,14 @@
         color: #22AA22;
         font-size: 40px;
         text-align: right;
-        border-bottom: 1px solid grey;
+      }
+      .div_table_list_recovered_header_cell
+      {
+        display: table-cell;
+        color: #22AA22;
+        font-size: 40px;
+        text-align: right;
+        background: #404040;
       }
 
 table {
@@ -63,5 +92,5 @@ table {
 }
 
 table > tbody > tr:nth-of-type(even) {
-  background: grey;
+  background: #404040;
 }
