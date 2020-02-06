@@ -8,9 +8,9 @@
       google.charts.load('current', {'packages':['geochart']});
       google.charts.setOnLoadCallback(drawRegionsMap);
 
-      function handleQueryResponse(response) 
+      function handleQueryResponse(response)
       {
-        if (response.isError()) 
+        if (response.isError())
         {
           alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
           return;
@@ -22,20 +22,23 @@
         coronaTable.addColumn({type:'number', id:'Confirmed'});
         coronaTable.addColumn({type:'number', id:'Deaths'});
         //alert(JSON.stringify(coronaData[x], null, 4));
-        
+
         var numRows = coronaData.getNumberOfRows();
         var numCols = coronaData.getNumberOfColumns();
         var totalConfirmed = 0;
         var totalDeath = 0;
         var totalRecovered = 0;
 
-        document.getElementById('div_country_list').innerHTML += '<div class=div_table_list_header_row>';
-        document.getElementById('div_country_list').innerHTML += '<div class=div_table_list_cell>' + 'Country' +'</div>';
-        document.getElementById('div_country_list').innerHTML += '<div class=div_table_list_confirmed_cell>' + 'Confirmed' +'</div>';
-        document.getElementById('div_country_list').innerHTML += '<div class=div_table_list_death_cell>' + 'Deaths' +'</div>';
-        document.getElementById('div_country_list').innerHTML += '<div class=div_table_list_recovered_cell>' + 'Recovered' +'</div>';
-        document.getElementById('div_country_list').innerHTML += '</div>';
+        var root = document.querySelector('div#div_country_list');
 
+        root.querySelector('thead').appendChild(createRow([
+          {label: 'Country', className: 'div_table_list_cell'},
+          {label: 'Confirmed', className: 'div_table_list_confirmed_cell'},
+          {label: 'Deaths', className: 'div_table_list_death_cell'},
+          {label: 'Recovered', className: 'div_table_list_recovered_cell'},
+        ]));
+
+        var tbody = root.querySelector('tbody');
         for(var idx = 0;idx < numRows;idx++)
         {
         	if('Mainland China'==coronaData.getValue(idx, 0))
@@ -49,18 +52,17 @@
           totalConfirmed += coronaData.getValue(idx, 1);
           totalDeath += coronaData.getValue(idx, 2);
           totalRecovered += coronaData.getValue(idx, 3);
-
-          document.getElementById('div_country_list').innerHTML += '<div class=div_table_list_header_row>';
-          document.getElementById('div_country_list').innerHTML += '<div class=div_table_list_cell>' + coronaData.getValue(idx, 0) +'</div>';
-          document.getElementById('div_country_list').innerHTML += '<div class=div_table_list_confirmed_cell>' + coronaData.getValue(idx, 1) +'</div>';
-          document.getElementById('div_country_list').innerHTML += '<div class=div_table_list_death_cell>' + coronaData.getValue(idx, 2) +'</div>';
-          document.getElementById('div_country_list').innerHTML += '<div class=div_table_list_recovered_cell>' + coronaData.getValue(idx, 3) +'</div>';
-          document.getElementById('div_country_list').innerHTML += '</div>';
+          tbody.appendChild(createRow([
+            {label: coronaData.getValue(idx, 0), className: 'div_table_list_cell'},
+            {label: coronaData.getValue(idx, 1), className: 'div_table_list_confirmed_cell'},
+            {label: coronaData.getValue(idx, 2), className: 'div_table_list_death_cell'},
+            {label: coronaData.getValue(idx, 3), className: 'div_table_list_recovered_cell'},
+          ]));
         }
         document.getElementById('div_sum_confirmed').innerText = totalConfirmed;
         document.getElementById('div_sum_death').innerText = totalDeath;
         document.getElementById('div_sum_recovered').innerText = totalRecovered;
-        
+
         var container = document.getElementById('regions_div');
         var chart = new google.visualization.GeoChart(container);
 
@@ -73,13 +75,13 @@
 
         chart.draw(coronaTable, options);
       }
-      function localizationText() 
+      function localizationText()
       {
         document.getElementById('div_text_confirmed').innerText = 'Confirmed';
         document.getElementById('div_text_death').innerText = 'Deaths';
         document.getElementById('div_text_recovered').innerText = 'Recovered';
       }
-      function drawRegionsMap() 
+      function drawRegionsMap()
       {
         localizationText();
 
@@ -88,9 +90,20 @@
 
         var spreadsheetURL = 'https://docs.google.com/spreadsheets/d/1wQVypefm946ch4XDp37uZ-wartW4V7ILdg-qYiDXUHM/edit?usp=sharing';
         var queryString ='SELECT B, sum(D), sum(E), sum(F) group by B order by sum(D) desc';
- 
+
         var query = new google.visualization.Query(spreadsheetURL + "&headers=1&tq=" + queryString);
         query.send(handleQueryResponse);
+      }
+
+      function createRow(data) {
+        var tr = document.createElement('tr');
+        data.forEach(function(item){
+          var td = document.createElement('td');
+          td.innerText = item.label;
+          td.className = item.className;
+          tr.appendChild(td);
+        });
+        return tr;
       }
     </script>
   </head>
@@ -108,6 +121,11 @@
       </div>
     </div>
     <div id="regions_div"></div>
-    <div id="div_country_list" class='div_table_list'></div>
+    <div id="div_country_list" class='div_table_list'>
+      <table>
+        <thead></thead>
+        <tbody></tbody>
+      </table>
+    </div>
   </body>
 </html>
