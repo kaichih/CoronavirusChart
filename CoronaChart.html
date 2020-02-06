@@ -1,5 +1,6 @@
 <html>
   <head>
+    <title>2019 n-CoV Status</title>
     <link rel="stylesheet" type="text/css" href="style.css">
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
@@ -31,10 +32,10 @@
         var root = document.querySelector('div#div_country_list');
 
         root.querySelector('thead').appendChild(createRow([
-          {label: '國家', className: 'div_table_list_cell'},
-          {label: '確診', className: 'div_table_list_confirmed_cell'},
-          {label: '死亡', className: 'div_table_list_death_cell'},
-          {label: '康復', className: 'div_table_list_recovered_cell'},
+          {label: 'Country', className: 'div_table_list_cell'},
+          {label: 'Confirmed', className: 'div_table_list_confirmed_cell'},
+          {label: 'Deaths', className: 'div_table_list_death_cell'},
+          {label: 'Recovered', className: 'div_table_list_recovered_cell'},
         ]));
 
         var tbody = root.querySelector('tbody');
@@ -76,9 +77,9 @@
       }
       function localizationText()
       {
-        document.getElementById('div_text_confirmed').innerText = '確診';
-        document.getElementById('div_text_death').innerText = '死亡';
-        document.getElementById('div_text_recovered').innerText = '康復';
+        document.getElementById('div_text_confirmed').innerText = 'Confirmed';
+        document.getElementById('div_text_death').innerText = 'Deaths';
+        document.getElementById('div_text_recovered').innerText = 'Recovered';
       }
       function drawRegionsMap()
       {
