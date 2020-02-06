@@ -17,13 +17,6 @@
         text-align: center;
         width: 33%;
       }
-      .div_table_list
-      {
-        display: table;
-        border: none;
-        width: 95%;
-        margin-left: 20px;
-      }
       .div_table_list_header_row
       {
         width: 100%;
@@ -64,3 +57,11 @@
         text-align: right;
         border-bottom: 1px solid grey;
       }
+
+table {
+  width: 100%;
+}
+
+table > tbody > tr:nth-of-type(even) {
+  background: grey;
+}
