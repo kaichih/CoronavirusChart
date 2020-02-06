@@ -1,5 +1,6 @@
 <html>
   <head>
+    <title>2019 n-CoV Status</title>
     <link rel="stylesheet" type="text/css" href="style.css">
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
@@ -29,10 +30,10 @@
         var totalRecovered = 0;
 
         document.getElementById('div_country_list').innerHTML += '<div class=div_table_list_header_row>';
-        document.getElementById('div_country_list').innerHTML += '<div class=div_table_list_cell>' + '國家' +'</div>';
-        document.getElementById('div_country_list').innerHTML += '<div class=div_table_list_confirmed_cell>' + '確診' +'</div>';
-        document.getElementById('div_country_list').innerHTML += '<div class=div_table_list_death_cell>' + '死亡' +'</div>';
-        document.getElementById('div_country_list').innerHTML += '<div class=div_table_list_recovered_cell>' + '康復' +'</div>';
+        document.getElementById('div_country_list').innerHTML += '<div class=div_table_list_cell>' + 'Country' +'</div>';
+        document.getElementById('div_country_list').innerHTML += '<div class=div_table_list_confirmed_cell>' + 'Confirmed' +'</div>';
+        document.getElementById('div_country_list').innerHTML += '<div class=div_table_list_death_cell>' + 'Deaths' +'</div>';
+        document.getElementById('div_country_list').innerHTML += '<div class=div_table_list_recovered_cell>' + 'Recovered' +'</div>';
         document.getElementById('div_country_list').innerHTML += '</div>';
 
         for(var idx = 0;idx < numRows;idx++)
@@ -74,9 +75,9 @@
       }
       function localizationText() 
       {
-        document.getElementById('div_text_confirmed').innerText = '確診';
-        document.getElementById('div_text_death').innerText = '死亡';
-        document.getElementById('div_text_recovered').innerText = '康復';
+        document.getElementById('div_text_confirmed').innerText = 'Confirmed';
+        document.getElementById('div_text_death').innerText = 'Deaths';
+        document.getElementById('div_text_recovered').innerText = 'Recovered';
       }
       function drawRegionsMap() 
       {
