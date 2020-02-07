@@ -58,9 +58,13 @@
             {label: coronaData.getValue(idx, 3), className: 'div_table_list_recovered_cell'},
           ]));
         }
+        document.getElementById('div_sum_country').innerText = numRows;
         document.getElementById('div_sum_confirmed').innerText = totalConfirmed;
         document.getElementById('div_sum_death').innerText = totalDeath;
         document.getElementById('div_sum_recovered').innerText = totalRecovered;
+
+        document.getElementById('div_text_death').innerText += ' ' + (100*totalDeath/totalConfirmed).toFixed(2) + '%';
+        document.getElementById('div_text_recovered').innerText += ' ' + (100*totalRecovered/totalConfirmed).toFixed(2) + '%';
 
         var container = document.getElementById('regions_div');
         var chart = new google.visualization.GeoChart(container);
@@ -76,6 +80,7 @@
       }
       function localizationText()
       {
+        document.getElementById('div_text_country').innerText = 'Countries';
         document.getElementById('div_text_confirmed').innerText = 'Confirmed';
         document.getElementById('div_text_death').innerText = 'Deaths';
         document.getElementById('div_text_recovered').innerText = 'Recovered';
@@ -109,13 +114,19 @@
   <body style='background-color: #303030;font-family: Verdana'>
     <div id="div_table_total">
       <div class='div_table_total_row'>
+        <div class='div_table_total_cell' id='div_text_country' style='color: #AAAAAA'></div>
         <div class='div_table_total_cell' id='div_text_confirmed' style='color: #8888FF'></div>
-        <div class='div_table_total_cell' id='div_text_death' style='color: #AA5555'></div>
+      </div>
+      <div class='div_table_total_row'>
+        <div class='div_table_total_cell' id='div_sum_country' style='color: #AAAAAA; font-weight: bold; font-size: 90px'></div>
+        <div class='div_table_total_cell' id='div_sum_confirmed' style='color: #8888FF; font-weight: bold; font-size: 90px'></div>
+      </div>
+      <div class='div_table_total_row'>
+        <div class='div_table_total_cell' id='div_text_death' style='color: #FF5555'></div>
         <div class='div_table_total_cell' id='div_text_recovered' style='color: #22AA22'></div>
       </div>
       <div class='div_table_total_row'>
-        <div class='div_table_total_cell' id='div_sum_confirmed' style='color: #8888FF; font-weight: bold; font-size: 90px'></div>
-        <div class='div_table_total_cell' id='div_sum_death' style='color: #AA5555; font-weight: bold; font-size: 90px'></div>
+        <div class='div_table_total_cell' id='div_sum_death' style='color: #FF5555; font-weight: bold; font-size: 90px'></div>
         <div class='div_table_total_cell' id='div_sum_recovered' style='color: #22AA22; font-weight: bold; font-size: 90px'></div>
       </div>
     </div>

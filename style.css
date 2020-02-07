@@ -60,14 +60,14 @@
       .div_table_list_death_cell
       {
         display: table-cell;
-        color: #AA5555;
+        color: #FF5555;
         font-size: 40px;
         text-align: right;
       }
       .div_table_list_death_header_cell
       {
         display: table-cell;
-        color: #AA5555;
+        color: #FF5555;
         font-size: 40px;
         text-align: right;
         background: #404040;
