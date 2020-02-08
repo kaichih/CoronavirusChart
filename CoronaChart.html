@@ -73,7 +73,7 @@
           displayMode: 'regions',
           backgroundColor: '#303030',
           datalessRegionColor: 'grey',
-          colorAxis: {maxValue: 40, colors: ['orange', 'red']}
+          colorAxis: {maxValue: 50, colors: ['orange', 'red']}
         };
 
         chart.draw(coronaTable, options);
@@ -88,9 +88,6 @@
       function drawRegionsMap()
       {
         localizationText();
-
-        var container = document.getElementById('regions_div');
-        var chart = new google.visualization.GeoChart(container);
 
         var spreadsheetURL = 'https://docs.google.com/spreadsheets/d/1wQVypefm946ch4XDp37uZ-wartW4V7ILdg-qYiDXUHM/edit?usp=sharing';
         var queryString ='SELECT B, sum(D), sum(E), sum(F) group by B order by sum(D) desc';
