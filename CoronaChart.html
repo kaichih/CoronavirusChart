@@ -40,7 +40,7 @@
         var tbody = root.querySelector('tbody');
         for(var idx = 0;idx < numRows;idx++)
         {
-        	if('Mainland China'==coronaData.getValue(idx, 0))
+        	if('Mainland China'==coronaData.getValue(idx, 0) or 'China'==coronaData.getValue(idx, 0))
         	{
         		coronaTable.addRow(['China', coronaData.getValue(idx, 1), coronaData.getValue(idx, 2)]);
         	}
@@ -73,7 +73,7 @@
           displayMode: 'regions',
           backgroundColor: '#303030',
           datalessRegionColor: 'grey',
-          colorAxis: {maxValue: 2000, colors: ['orange', 'red']}
+          colorAxis: {maxValue: 1000, colors: ['orange', 'red']}
         };
 
         chart.draw(coronaTable, options);
